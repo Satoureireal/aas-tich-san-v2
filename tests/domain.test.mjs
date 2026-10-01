@@ -20,7 +20,9 @@ test("Parse sheet Landing page: đủ các nhóm nội dung V2", async () => {
   assert.equal(c.model.layers.length, 3);
   assert.equal(c.compound.stocks.length, 4);
   assert.equal(c.steps.length, 5);
-  assert.deepEqual(c.survey, { title: "THIẾT KẾ LỘ TRÌNH ĐẦU TƯ", subtitle: "CÙNG AAS QUẢN LÝ TÀI SẢN" });
+  assert.equal(c.survey.title, "THIẾT KẾ LỘ TRÌNH ĐẦU TƯ CỦA BẠN");
+  assert.ok(c.survey.intro.startsWith("Tham gia khảo sát sức khỏe tài chính"));
+  assert.equal(c.survey.cta, "BẮT ĐẦU KHẢO SÁT");
   assert.ok(c.compound.intro.startsWith("Danh mục được thiết kế"));
   assert.equal(c.experts.length, 4);
   assert.equal(c.faqs.length, 19);

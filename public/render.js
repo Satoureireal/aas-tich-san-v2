@@ -310,11 +310,11 @@ function faq(c) {
   return `<section id="faq" class="section faq-section has-brand-deco">${brandDeco([["band", "tr"]])}<div class="wrap faq-grid"><div class="faq-heading reveal">${copy("h2", c.faqTitle, "D18")}<button class="cta" data-book data-source="E18"><span>LIÊN HỆ TƯ VẤN</span>${arrow}</button></div><div class="faq-layout"><div class="faq-list" id="faq-list">${c.faqs.map(([question, answer], i) => `<details class="faq-item"><summary><span class="faq-number">${String(i + 1).padStart(2, "0")}</span>${copy("span", question, "D18")}</summary>${copy("p", answer, "D18")}</details>`).join("")}</div><div class="faq-answer" id="faq-answer" aria-live="polite"></div></div><button type="button" class="faq-more" id="faq-more" aria-controls="faq-list" aria-expanded="false">Xem thêm ${Math.max(0, c.faqs.length - 6)} câu hỏi</button></div></section>`;
 }
 
-// Thiết kế lộ trình đầu tư (bản v2): khung video 16:9 + 2 nút bên dưới.
+// Thiết kế lộ trình đầu tư (bản v2): tiêu đề + mô tả (ô D16), khung video 16:9, nút Bắt đầu khảo sát bên dưới.
 // Có video thì điền VIDEO.src (vd "images/video-lo-trinh.mp4", kèm VIDEO.poster nếu có ảnh bìa)
 // hoặc VIDEO.embed (link YouTube dạng https://www.youtube.com/embed/…). Để trống thì hiện khung chờ.
 export const VIDEO = { src: "", poster: "", embed: "" };
-// Trang khảo sát khẩu vị của bên phân tích (nút "Hiểu khẩu vị của tôi").
+// Trang khảo sát sức khỏe tài chính của bên phân tích (nút "Bắt đầu khảo sát", mở tab mới).
 export const SURVEY = { url: "https://finhcaas.netlify.app/" };
 function survey(c) {
   const s = c.survey;
@@ -323,8 +323,8 @@ function survey(c) {
     : VIDEO.src
       ? `<video src="${escape(VIDEO.src)}"${VIDEO.poster ? ` poster="${escape(VIDEO.poster)}"` : ""} controls preload="metadata" playsinline></video>`
       : `<div class="video-wait" role="img" aria-label="Video thiết kế lộ trình đầu tư (sắp cập nhật)"><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><strong>Video thiết kế lộ trình đầu tư</strong><span>Sắp cập nhật</span></div>`;
-  const actions = `<div class="video-actions"><button type="button" class="cta" data-book><span>TƯ VẤN LỘ TRÌNH RIÊNG</span>${arrow}</button><a class="cta cta-quiet" href="${escape(SURVEY.url)}" target="_blank" rel="noopener"><span>HIỂU KHẨU VỊ CỦA TÔI</span>${arrow}</a></div>`;
-  return `<section id="planner" class="section planner-section"><div class="wrap"><div class="section-heading reveal">${copy("h2", s.title, "D16")}${copy("p", s.subtitle, "D16", "pl-subtitle")}</div><div class="video-frame reveal">${player}</div>${actions}</div></section>`;
+  const actions = `<div class="video-actions"><a class="cta" id="start-survey" href="${escape(SURVEY.url)}" target="_blank" rel="noopener" data-source="D16"><span>${escape(s.cta)}</span>${arrow}</a></div>`;
+  return `<section id="planner" class="section planner-section"><div class="wrap"><div class="section-heading reveal">${copy("h2", s.title, "D16")}${copy("p", s.intro, "D16", "lead")}</div><div class="video-frame reveal">${player}</div>${actions}</div></section>`;
 }
 
 export function renderPage(c) {

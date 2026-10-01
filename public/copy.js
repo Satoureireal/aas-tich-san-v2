@@ -95,7 +95,7 @@ export function parseCopy(cells) {
     stepsTitle: lines(cells.D15)[0],
     steps: numberedGroups(lines(cells.D15).slice(1), /^0[1-5] —/, 5),
     // D16: tiêu đề, mô tả, chữ trên nút khảo sát.
-    survey: { title: plan[0], subtitle: plan[1] },
+    survey: { title: plan[0], intro: plan[1], cta: plan[2] },
     expertsTitle: experts[0][0],
     expertsIntro: experts[0].slice(1).join(" "),
     experts: experts.slice(1),

@@ -56,7 +56,7 @@ Sửa chữ trực tiếp trong `public/content.json` (đã có nhiều chỉnh 
 
 ## Section 16: Thiết kế lộ trình đầu tư (bản v2)
 
-Bản v2 không có công cụ mô phỏng. Section gồm tiêu đề (ô D16), khung video 16:9 và 2 nút: **TƯ VẤN LỘ TRÌNH RIÊNG** (mở form nhận tư vấn) và **HIỂU KHẨU VỊ CỦA TÔI** (mở trang khảo sát ở tab mới).
+Bản v2 không có công cụ mô phỏng. Section gồm tiêu đề và mô tả (ô D16), khung video 16:9 và nút **BẮT ĐẦU KHẢO SÁT** (mở trang khảo sát ở tab mới).
 
 Thêm video ở `VIDEO` trong `public/render.js`:
 

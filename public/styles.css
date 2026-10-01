@@ -3544,13 +3544,6 @@ dialog p {
 #planner .section-heading h2 {
   text-wrap: balance;
 }
-.pl-subtitle {
-  margin: 8px 0 0;
-  color: #3f70bf;
-  font-size: clamp(16px, 1.6vw, 20px);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
 .video-frame {
   position: relative;
   max-width: 960px;
@@ -3612,10 +3605,6 @@ dialog p {
   justify-content: center;
   gap: 14px;
   margin-top: 32px;
-}
-.video-actions .cta-quiet {
-  border-color: var(--navy);
-  color: var(--navy);
 }
 @media (max-width: 640px) {
   .video-frame {

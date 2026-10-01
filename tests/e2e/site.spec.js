@@ -131,20 +131,21 @@ test("Quỹ đạo, tháp, tài sản, cổ phiếu và backtest tương tác", 
   await expect(page.locator("#image-dialog")).not.toBeVisible();
 });
 
-test("Thiết kế lộ trình (v2): khung video 16:9 chờ cập nhật và 2 nút bên dưới", async ({ page }) => {
+test("Thiết kế lộ trình (v2): khung video 16:9 chờ cập nhật và nút Bắt đầu khảo sát", async ({ page }) => {
   await ready(page);
   await expect(page.locator("#planner .planner, #planner .pl-tabs")).toHaveCount(0);
-  await expect(page.locator("#planner h2")).toHaveText("THIẾT KẾ LỘ TRÌNH ĐẦU TƯ");
+  await expect(page.locator("#planner h2")).toHaveText("THIẾT KẾ LỘ TRÌNH ĐẦU TƯ CỦA BẠN");
+  await expect(page.locator("#planner .lead")).toContainText("Tham gia khảo sát sức khỏe tài chính");
   const frame = page.locator("#planner .video-frame");
   await expect(frame).toBeVisible();
   const ratio = await frame.evaluate((box) => box.clientWidth / box.clientHeight);
   expect(ratio).toBeCloseTo(16 / 9, 1);
   await expect(frame.locator(".video-wait")).toContainText("Sắp cập nhật");
-  const survey = page.locator("#planner a", { hasText: "HIỂU KHẨU VỊ CỦA TÔI" });
+  const survey = page.locator("#start-survey");
+  await expect(survey).toHaveText("BẮT ĐẦU KHẢO SÁT");
   await expect(survey).toHaveAttribute("href", "https://finhcaas.netlify.app/");
   await expect(survey).toHaveAttribute("target", "_blank");
-  await page.locator("#planner [data-book]").click();
-  await expect(page.locator("#contact-dialog")).toBeVisible();
+  await expect(page.locator("#planner .cta")).toHaveCount(1);
 });
 
 test("Đặt lịch trực tiếp, khung giờ đúng Excel và lỗi API không báo thành công", async ({
