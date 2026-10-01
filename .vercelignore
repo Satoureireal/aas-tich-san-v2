@@ -1,0 +1,10 @@
+# Vercel chỉ phục vụ site tĩnh trong public/ (chế độ demo, form không gửi đi đâu).
+# Không upload server Node: Vercel sẽ tự biến nó thành serverless function và lỗi
+# vì server cần ghi file vào data/.
+server.mjs
+tests/
+docs/
+v2/
+data/
+playwright.config.js
+anh-goc/

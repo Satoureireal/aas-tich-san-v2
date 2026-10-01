@@ -1,0 +1,10 @@
+# Lưu file văn bản với xuống dòng LF trong repo (tránh diff rác giữa Windows/macOS/Linux).
+* text=auto eol=lf
+
+# File nhị phân: không bao giờ chuyển đổi.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.xlsx binary
+*.ai binary

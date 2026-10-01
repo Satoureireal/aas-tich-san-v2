@@ -1,0 +1,42 @@
+# Deploy bản demo (thư mục public) lên GitHub Pages mỗi khi push lên nhánh master/main.
+# Bật một lần: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+name: Deploy demo lên GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Kiểm tra nội dung/logic trước khi đăng (unit test chỉ dùng Node, không cần cài thư viện).
+      - run: npm test
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

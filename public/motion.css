@@ -1,0 +1,132 @@
+/* All loops are decorative 2D motion. Data geometry and labels stay fixed. */
+.cta,
+.icon-button,
+.expert-card,
+.orbit-goal,
+.asset-card,
+.pyramid-layer {
+  transition:background-color .22s,border-color .22s,box-shadow .25s,transform .28s;
+}
+.portrait img { transition:scale .4s ease; }
+.cta::before { content:''; position:absolute; inset:-35% -55%; background:linear-gradient(110deg,transparent 30%,#ffffff60 49%,transparent 68%); transform:translateX(-100%); pointer-events:none; z-index:-1; }
+.orbit-stage { touch-action:pan-y; }
+.glass-icon { position:relative; }
+.glass-icon::after { content:''; position:absolute; inset:-5px; border:1px solid #7ba453; border-radius:20px; opacity:0; pointer-events:none; }
+
+.stock-comparison { overflow:hidden; }
+.feature-col-left .feature-card { --from:28px; }
+.feature-col-right .feature-card { --from:-28px; }
+
+@media(prefers-reduced-motion:no-preference) {
+  html[data-motion=on] .orbital-light { animation:halo-drift 10s ease-in-out infinite; }
+
+  /* Goals orbit the centre slowly, one gentle step at a time; labels counter-rotate to stay upright.
+     Feature dots live outside .orbit-system, so neither the loop nor the drag rotates them: they stay upright beside their boxes. */
+  html[data-motion=on] .track-goals { animation:orbit-turn 40s linear infinite; }
+  html[data-motion=on] .track-goals .orbit-upright { animation:orbit-turn-rev 40s linear infinite; }
+  /* Cuộn tới section: vòng quỹ đạo xoáy vào và phóng to, tâm bật lên. */
+  html[data-motion=on] .solution-grid:not(.is-revealed) :is(.orbit-system,.orbit-center) { opacity:0; }
+  html[data-motion=on] .solution-grid.is-revealed .orbit-system { animation:orbit-enter 1.3s cubic-bezier(.2,.7,.2,1) backwards; }
+  html[data-motion=on] .solution-grid.is-revealed .orbit-center { animation:tile-in .7s cubic-bezier(.2,.8,.3,1.2) .5s backwards; }
+  html[data-motion=on] .orbit-stage:is(:hover,:focus-within) :is(.orbit-track,.orbit-upright) { animation-play-state:paused; }
+  /* Feature boxes 01→05 appear in turn, each lighting its dot on the orbit. */
+  html[data-motion=on] .solution-grid:not(.is-revealed) :is(.feature-card) { opacity:0; }
+  html[data-motion=on] .solution-grid.is-revealed .feature-card { animation:feature-in .7s cubic-bezier(.2,.7,.2,1) both; animation-delay:calc(var(--step) * .6s + .3s); }
+  html[data-motion=on] .orbit-goal .goal-icon { animation:picture-breathe 7s ease-in-out infinite; }
+  html[data-motion=on] .orbit-goal:nth-child(2n) .goal-icon { animation-delay:-3s; }
+  /* Nỗi đau: nhãn nổi quanh nhân vật trôi nhẹ lệch nhịp, dấu hỏi nhún nhảy. */
+  html[data-motion=on] .pain-card .art-chip,html[data-motion=on] .pain-card .art-float { animation:chip-float 5s ease-in-out infinite; animation-delay:calc(var(--d, 0s) * -1); transform-box:fill-box; }
+  html[data-motion=on] .pain-card .art-q { animation:q-bob 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  html[data-motion=on] .bridge-emblem { animation:plaque-float 6s ease-in-out infinite; }
+  html[data-motion=on] .bridge-emblem::after { animation:emblem-glint 5s ease-in-out infinite; }
+  html[data-motion=on] .glass-icon::after { animation:icon-ripple 4s ease-out infinite; }
+
+  html[data-motion=on] .stock-dots [aria-pressed="true"] i::after { animation:stock-progress 4.5s linear; }
+  html[data-motion=on] .stock-comparison:is(:hover,:focus-within) .stock-dots i::after { animation-play-state:paused; }
+
+  /* Lãi kép: các cột chồng mọc lên lần lượt từ năm 1 tới năm 10 khi vào màn hình. */
+  html[data-motion=on] .compound-art:not(.is-revealed) .cc-stack { transform:scaleY(0); }
+  html[data-motion=on] .compound-art.is-revealed .cc-stack { animation:cc-grow .7s cubic-bezier(.2,.7,.2,1) backwards; animation-delay:calc(var(--i) * 70ms); }
+  /* Kim tự tháp dựng từ đáy lên: mỗi tầng nhô lên, thẻ thông tin trượt vào bên cạnh. */
+  html[data-motion=on] .governance:not(.is-revealed) :is(.pyr-tier,.layer-panel,.pyr-star) { opacity:0; }
+  html[data-motion=on] .governance.is-revealed .pyr-tier { animation:tier-rise .8s cubic-bezier(.2,.7,.2,1) backwards; animation-delay:calc(var(--order) * .6s + .15s); }
+  html[data-motion=on] .governance.is-revealed .pyr-star { animation:star-twinkle 2.8s ease-in-out 1.9s infinite backwards; transform-box:fill-box; transform-origin:center; }
+  html[data-motion=on] .pyr-halo { animation:halo-drift 8s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  html[data-motion=on] .governance.is-revealed .layer-panel { --from:32px; animation:feature-in .7s cubic-bezier(.2,.7,.2,1) backwards; animation-delay:calc(var(--order) * .6s + .35s); }
+  /* Sau đó các box sáng lần lượt liên tục: tầng đang chọn nhịp sáng, thẻ của nó có vệt sáng lướt qua. */
+  html[data-motion=on] .governance.is-revealed .pyr-tier.is-active .pyr-shine { animation:tier-shine 1.9s ease-in-out infinite; }
+  /* Đường nối hiện ra sau khi tháp và thẻ đã dựng xong; tầng đang chọn có vệt sáng chạy từ tháp ra thẻ. */
+  html[data-motion=on] .governance:not(.is-revealed) .pyr-links { opacity:0; }
+  html[data-motion=on] .governance.is-revealed .pyr-links { animation:soft-fade .6s ease-out 1.6s backwards; }
+  html[data-motion=on] .pyr-link.is-active .pyr-link-flow { opacity:.9; animation:path-flow 2.4s linear .75s infinite; }
+  html[data-motion=on] .pyr-link.is-active .pyr-link-start { animation:link-pulse 1.9s ease-in-out infinite; }
+  html[data-motion=on] .layer-panel.is-active::after { content:''; position:absolute; inset:0; background:linear-gradient(105deg,transparent 35%,#ffffff14 50%,transparent 65%); animation:panel-sweep 3.8s ease-in-out infinite; pointer-events:none; }
+  html[data-motion=on] .asset-card { animation:asset-spot 10s ease-in-out infinite; animation-delay:calc(var(--spot) * 2.5s); }
+  html[data-motion=on] .asset-card .asset-icon { animation:asset-icon-spot 10s ease-in-out infinite; animation-delay:calc(var(--spot) * 2.5s); }
+  html[data-motion=on] .model-assets:is(:hover,:focus-within) :is(.asset-card,.asset-icon) { animation-play-state:paused; }
+
+  html[data-motion=on] .portrait img { animation:portrait-drift 10s ease-in-out infinite; }
+  html[data-motion=on] .cta.is-visible:not(:disabled):not(:hover):not(:focus-visible)::before { animation:cta-sweep 3.8s ease-in-out infinite; }
+  html[data-motion=on] .cta.is-visible:not(:disabled):not(:hover):not(:focus-visible)>svg { animation:cta-arrow 2.7s ease-in-out infinite; }
+  html[data-motion=on] .step-token { animation:step-light 10s ease-in-out infinite; animation-delay:calc(var(--step) * 2s); }
+  /* 5 bước: vệt sáng chạy dọc đường lượn sóng; các nút số sáng lần lượt. */
+  html[data-motion=on] .wave-flow { display:block; animation:path-flow 10s linear infinite; }
+  html[data-motion=on] .closing-coin { animation:coin-float 8s ease-in-out infinite; }
+  html[data-motion=on] details[open]>p { animation:soft-in .3s ease-out; }
+  html[data-motion=on] dialog[open] { animation:modal-in .28s ease-out; }
+  html[data-motion=on] .layer-panel:not([hidden]) { animation:soft-in .35s ease-out; }
+
+  /* Observe each graphic as well as its section, including dynamically made charts. */
+  html[data-motion=on] .loop-zone:not(.is-visible) *,
+  html[data-motion=on] .loop-zone:not(.is-visible) *::before,
+  html[data-motion=on] .loop-zone:not(.is-visible) *::after,
+  html[data-motion=on] .motion-graphic:not(.is-visible),
+  html[data-motion=on] .motion-graphic:not(.is-visible) *,
+  html[data-motion=on] .motion-graphic:not(.is-visible)::after,
+  html[data-motion=on] .motion-graphic:not(.is-visible) *::before,
+  html[data-motion=on] .motion-graphic:not(.is-visible) *::after { animation-play-state:paused; }
+
+  @media(hover:hover) and (pointer:fine) {
+    html[data-motion=on] .cta:hover:not(:disabled) { transform:translateY(-3px); }
+    html[data-motion=on] .cta:active:not(:disabled) { transform:translateY(1px); }
+    html[data-motion=on] .expert-card:hover { transform:translateY(-4px); }
+    html[data-motion=on] .asset-card:hover .asset-icon { translate:0 -3px; }
+  }
+}
+html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after { animation:none!important; transition:none!important; }
+html[data-motion=off] { scroll-behavior:auto; }
+@keyframes coin-float { 0%,100% { translate:0 0; rotate:-5deg; } 50% { translate:0 -12px; rotate:5deg; } }
+@keyframes plaque-float { 0%,100% { translate:0 0; } 50% { translate:0 -7px; } }
+@keyframes picture-breathe { 0%,100% { scale:1; } 50% { scale:1.035; } }
+@keyframes portrait-drift { 0%,100% { scale:1.01; translate:0 0; } 50% { scale:1.035; translate:0 -3px; } }
+@keyframes halo-drift { 0%,100% { scale:1; opacity:.65; } 50% { scale:1.045; opacity:1; } }
+
+@keyframes feature-in { from { opacity:0; translate:var(--from, 0) 12px; } to { opacity:1; translate:0 0; } }
+
+@keyframes orbit-turn { to { rotate:360deg; } }
+@keyframes orbit-turn-rev { to { rotate:-360deg; } }
+@keyframes orbit-enter { from { opacity:0; scale:.55; rotate:-120deg; } to { opacity:1; scale:1; rotate:0deg; } }
+@keyframes cta-sweep { 0%,35% { transform:translateX(-100%); } 85%,100% { transform:translateX(100%); } }
+@keyframes stock-progress { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+@keyframes emblem-glint { 0%,55% { transform:translateX(-80%); } 85%,100% { transform:translateX(80%); } }
+@keyframes tier-rise { from { opacity:0; translate:0 28px; scale:.9 1; } to { opacity:1; translate:0 0; scale:1 1; } }
+@keyframes tier-shine { 0%,100% { opacity:0; } 50% { opacity:.16; } }
+@keyframes star-twinkle { 0%,100% { scale:.7; opacity:.5; } 50% { scale:1.15; opacity:1; } }
+
+@keyframes chip-float { 0%,100% { translate:0 0; } 50% { translate:0 -6px; } }
+@keyframes q-bob { 0%,100% { rotate:-8deg; translate:0 0; } 50% { rotate:8deg; translate:0 -4px; } }
+@keyframes soft-fade { from { opacity:0; } }
+@keyframes link-pulse { 0%,100% { scale:1; } 50% { scale:1.45; } }
+@keyframes cc-grow { from { transform:scaleY(0); } }
+@keyframes tile-in { from { opacity:0; scale:.6; } }
+@keyframes panel-sweep { 0% { translate:-100% 0; } 60%,100% { translate:100% 0; } }
+@keyframes asset-spot { 0%,30%,100% { border-color:#7894aa70; translate:0 0; } 8%,22% { border-color:var(--accent); translate:0 -4px; } }
+@keyframes asset-icon-spot { 0%,30%,100% { box-shadow:inset 0 1px 0 #ffffff30,0 12px 26px #07162d40; } 8%,22% { box-shadow:inset 0 1px 0 #ffffff30,0 0 0 6px #ffffff12,0 0 24px var(--accent); } }
+@keyframes path-flow { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+
+@keyframes icon-ripple { 0% { scale:.9; opacity:0; } 20% { opacity:.5; } 85%,100% { scale:1.28; opacity:0; } }
+@keyframes cta-arrow { 0%,55%,100% { translate:0 0; } 70%,85% { translate:5px 0; } 78% { translate:2px 0; } }
+@keyframes step-light { 0%,20%,100% { translate:0 0; filter:brightness(1); } 4%,14% { translate:0 -4px; filter:brightness(1.14); } }
+@keyframes soft-in { from { opacity:0; translate:0 9px; } to { opacity:1; translate:0 0; } }
+@keyframes modal-in { from { opacity:0; translate:0 14px; scale:.98; } to { opacity:1; translate:0 0; scale:1; } }
+

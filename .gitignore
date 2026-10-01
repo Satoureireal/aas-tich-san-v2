@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Dữ liệu khách hàng do server ghi ra (họ tên, SĐT, email) — không bao giờ commit
+data/
+.env
+.env.*
+
+# Kết quả test
+test-results/
+playwright-report/
+blob-report/
+
+# File thiết kế gốc (Illustrator) — nặng, không dùng trên web
+*.ai
+
+# Cấu hình cục bộ của công cụ / hệ điều hành
+.claude/
+.vscode/
+.DS_Store
+Thumbs.db
+~$*
+
+# Ảnh gốc dung lượng lớn (web dùng bản tối ưu trong public/images)
+anh-goc/

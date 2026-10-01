@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lading-page-23-09.vercel.app/sitemap.xml

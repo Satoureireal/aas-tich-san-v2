@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo \"Không cần cài thư viện: site tĩnh\"",
+  "buildCommand": "node scripts/prerender.mjs",
+  "outputDirectory": "public",
+  "cleanUrls": false
+}
