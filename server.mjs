@@ -142,7 +142,7 @@ export function createApp({
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     response.setHeader(
       "Content-Security-Policy",
-      "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+      "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://drive.google.com https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
     );
     try {
       const url = new URL(request.url, "http://localhost");

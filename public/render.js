@@ -312,8 +312,9 @@ function faq(c) {
 
 // Thiết kế lộ trình đầu tư (bản v2): tiêu đề + mô tả (ô D16), khung video 16:9, nút Bắt đầu khảo sát bên dưới.
 // Có video thì điền VIDEO.src (vd "images/video-lo-trinh.mp4", kèm VIDEO.poster nếu có ảnh bìa)
-// hoặc VIDEO.embed (link YouTube dạng https://www.youtube.com/embed/…). Để trống thì hiện khung chờ.
-export const VIDEO = { src: "", poster: "", embed: "" };
+// hoặc VIDEO.embed (link nhúng: YouTube https://www.youtube.com/embed/…, Google Drive https://drive.google.com/file/d/<id>/preview). Để trống thì hiện khung chờ.
+// Đang dùng video ngang trên Google Drive (file "2-10 Quản lý gia sản bản ngang.mp4", chia sẻ "bất kỳ ai có đường liên kết").
+export const VIDEO = { src: "", poster: "", embed: "https://drive.google.com/file/d/1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh/preview" };
 // Trang khảo sát sức khỏe tài chính của bên phân tích (nút "Bắt đầu khảo sát", mở tab mới).
 export const SURVEY = { url: "https://finhcaas.netlify.app/" };
 function survey(c) {

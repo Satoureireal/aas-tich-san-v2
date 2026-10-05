@@ -62,7 +62,7 @@ Thêm video ở `VIDEO` trong `public/render.js`:
 
 - `src`: file video trong thư mục `public/images/`, vd `"images/video-lo-trinh.mp4"` (kèm `poster` là ảnh bìa nếu có).
 - hoặc `embed`: link YouTube dạng `https://www.youtube.com/embed/…`.
-- Để trống cả hai thì hiện khung chờ "Sắp cập nhật".
+- Để trống cả hai thì hiện khung chờ "Sắp cập nhật". Hiện đang nhúng video ngang từ Google Drive (file phải chia sẻ "bất kỳ ai có đường liên kết").
 
 Link khảo sát ở `SURVEY.url` (hiện là https://finhcaas.netlify.app/).
 

@@ -131,7 +131,7 @@ test("Quỹ đạo, tháp, tài sản, cổ phiếu và backtest tương tác", 
   await expect(page.locator("#image-dialog")).not.toBeVisible();
 });
 
-test("Thiết kế lộ trình (v2): khung video 16:9 chờ cập nhật và nút Bắt đầu khảo sát", async ({ page }) => {
+test("Thiết kế lộ trình (v2): khung video 16:9 (Google Drive) và nút Bắt đầu khảo sát", async ({ page }) => {
   await ready(page);
   await expect(page.locator("#planner .planner, #planner .pl-tabs")).toHaveCount(0);
   await expect(page.locator("#planner h2")).toHaveText("THIẾT KẾ LỘ TRÌNH ĐẦU TƯ CỦA BẠN");
@@ -140,7 +140,8 @@ test("Thiết kế lộ trình (v2): khung video 16:9 chờ cập nhật và nú
   await expect(frame).toBeVisible();
   const ratio = await frame.evaluate((box) => box.clientWidth / box.clientHeight);
   expect(ratio).toBeCloseTo(16 / 9, 1);
-  await expect(frame.locator(".video-wait")).toContainText("Sắp cập nhật");
+  await expect(frame.locator("iframe")).toHaveAttribute("src", "https://drive.google.com/file/d/1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh/preview");
+  await expect(frame.locator(".video-wait")).toHaveCount(0);
   const survey = page.locator("#start-survey");
   await expect(survey).toHaveText("BẮT ĐẦU KHẢO SÁT");
   await expect(survey).toHaveAttribute("href", "https://finhcaas.netlify.app/");
