@@ -310,22 +310,33 @@ function faq(c) {
   return `<section id="faq" class="section faq-section has-brand-deco">${brandDeco([["band", "tr"]])}<div class="wrap faq-grid"><div class="faq-heading reveal">${copy("h2", c.faqTitle, "D18")}<button class="cta" data-book data-source="E18"><span>LIÊN HỆ TƯ VẤN</span>${arrow}</button></div><div class="faq-layout"><div class="faq-list" id="faq-list">${c.faqs.map(([question, answer], i) => `<details class="faq-item"><summary><span class="faq-number">${String(i + 1).padStart(2, "0")}</span>${copy("span", question, "D18")}</summary>${copy("p", answer, "D18")}</details>`).join("")}</div><div class="faq-answer" id="faq-answer" aria-live="polite"></div></div><button type="button" class="faq-more" id="faq-more" aria-controls="faq-list" aria-expanded="false">Xem thêm ${Math.max(0, c.faqs.length - 6)} câu hỏi</button></div></section>`;
 }
 
-// Thiết kế lộ trình đầu tư (bản v2): tiêu đề + mô tả (ô D16), khung video 16:9, nút Bắt đầu khảo sát bên dưới.
-// Có video thì điền VIDEO.src (vd "images/video-lo-trinh.mp4", kèm VIDEO.poster nếu có ảnh bìa)
-// hoặc VIDEO.embed (link nhúng: YouTube https://www.youtube.com/embed/…, Google Drive https://drive.google.com/file/d/<id>/preview). Để trống thì hiện khung chờ.
-// Đang dùng video ngang trên Google Drive (file "2-10 Quản lý gia sản bản ngang.mp4", chia sẻ "bất kỳ ai có đường liên kết").
-export const VIDEO = { src: "", poster: "", embed: "https://drive.google.com/file/d/1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh/preview" };
-// Trang khảo sát sức khỏe tài chính của bên phân tích (nút "Bắt đầu khảo sát", mở tab mới).
-export const SURVEY = { url: "https://finhcaas.netlify.app/" };
+// Thiết kế lộ trình đầu tư (bản v2): tiêu đề + mô tả (ô D16), khung video, nút Bắt đầu khảo sát bên dưới.
+// Video responsive: wide (ngang 16:9) cho máy tính/tablet, tall (dọc 9:16) cho điện thoại ≤640px.
+// Mỗi bản: embed (link nhúng: Google Drive https://drive.google.com/file/d/<id>/preview, YouTube https://www.youtube.com/embed/…)
+// hoặc src (file mp4 trong public/images/, kèm poster nếu có). Bỏ trống tall thì điện thoại dùng luôn bản ngang;
+// bỏ trống cả hai thì hiện khung chờ. File Drive phải chia sẻ "bất kỳ ai có đường liên kết".
+export const VIDEO = {
+  wide: { embed: "https://drive.google.com/file/d/1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh/preview" }, // 2-10 Quản lý gia sản bản ngang.mp4
+  tall: { embed: "https://drive.google.com/file/d/1oQQBmNKy7pekLu3pP63EXcQYHvmTKEDR/preview" }, // 2-10 Quản lý gia sản bản dọc.mp4
+};
+// Trang khảo sát sức khỏe tài chính (nút "Bắt đầu khảo sát", mở tab mới).
+export const SURVEY = { url: "https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh" };
+// Bản ngang có src thật ngay trong HTML (SEO, không JS). Bản dọc chỉ có data-src; app.js gắn src khi màn hình ≤640px,
+// nên mỗi thiết bị chỉ tải video của mình (khung bị ẩn bằng CSS cũng để loading="lazy").
+const videoPlayer = ({ embed, src, poster } = {}, lazy = false) => {
+  const attr = lazy ? "data-src" : "src";
+  if (embed)
+    return `<iframe ${attr}="${escape(embed)}" title="Video thiết kế lộ trình đầu tư" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  if (src)
+    return `<video ${attr}="${escape(src)}"${poster ? ` poster="${escape(poster)}"` : ""} controls preload="${lazy ? "none" : "metadata"}" playsinline></video>`;
+  return `<div class="video-wait" role="img" aria-label="Video thiết kế lộ trình đầu tư (sắp cập nhật)"><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><strong>Video thiết kế lộ trình đầu tư</strong><span>Sắp cập nhật</span></div>`;
+};
 function survey(c) {
   const s = c.survey;
-  const player = VIDEO.embed
-    ? `<iframe src="${escape(VIDEO.embed)}" title="Video thiết kế lộ trình đầu tư" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`
-    : VIDEO.src
-      ? `<video src="${escape(VIDEO.src)}"${VIDEO.poster ? ` poster="${escape(VIDEO.poster)}"` : ""} controls preload="metadata" playsinline></video>`
-      : `<div class="video-wait" role="img" aria-label="Video thiết kế lộ trình đầu tư (sắp cập nhật)"><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><strong>Video thiết kế lộ trình đầu tư</strong><span>Sắp cập nhật</span></div>`;
+  const hasTall = Boolean(VIDEO.tall?.embed || VIDEO.tall?.src);
+  const frames = `<div class="video-frame is-wide${hasTall ? " has-tall" : ""} reveal">${videoPlayer(VIDEO.wide)}</div>${hasTall ? `<div class="video-frame is-tall reveal">${videoPlayer(VIDEO.tall, true)}</div>` : ""}`;
   const actions = `<div class="video-actions"><a class="cta" id="start-survey" href="${escape(SURVEY.url)}" target="_blank" rel="noopener" data-source="D16"><span>${escape(s.cta)}</span>${arrow}</a></div>`;
-  return `<section id="planner" class="section planner-section"><div class="wrap"><div class="section-heading reveal">${copy("h2", s.title, "D16")}${copy("p", s.intro, "D16", "lead")}</div><div class="video-frame reveal">${player}</div>${actions}</div></section>`;
+  return `<section id="planner" class="section planner-section"><div class="wrap"><div class="section-heading reveal">${copy("h2", s.title, "D16")}${copy("p", s.intro, "D16", "lead")}</div>${frames}${actions}</div></section>`;
 }
 
 export function renderPage(c) {

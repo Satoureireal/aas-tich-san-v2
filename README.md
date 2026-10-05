@@ -56,15 +56,14 @@ Sửa chữ trực tiếp trong `public/content.json` (đã có nhiều chỉnh 
 
 ## Section 16: Thiết kế lộ trình đầu tư (bản v2)
 
-Bản v2 không có công cụ mô phỏng. Section gồm tiêu đề và mô tả (ô D16), khung video 16:9 và nút **BẮT ĐẦU KHẢO SÁT** (mở trang khảo sát ở tab mới).
+Section gồm tiêu đề và mô tả (ô D16), khung video và nút **BẮT ĐẦU KHẢO SÁT** (mở `SURVEY.url` ở tab mới, hiện là https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh).
 
-Thêm video ở `VIDEO` trong `public/render.js`:
+Video ở `VIDEO` trong `public/render.js`, tự đổi theo màn hình:
 
-- `src`: file video trong thư mục `public/images/`, vd `"images/video-lo-trinh.mp4"` (kèm `poster` là ảnh bìa nếu có).
-- hoặc `embed`: link YouTube dạng `https://www.youtube.com/embed/…`.
-- Để trống cả hai thì hiện khung chờ "Sắp cập nhật". Hiện đang nhúng video ngang từ Google Drive (file phải chia sẻ "bất kỳ ai có đường liên kết").
+- `wide`: video ngang, khung 16:9, cho máy tính / tablet (đang nhúng "2-10 Quản lý gia sản bản ngang.mp4" từ Google Drive);
+- `tall`: video dọc, khung 9:16, cho điện thoại ≤640px (đang nhúng "2-10 Quản lý gia sản bản dọc.mp4" từ Google Drive).
 
-Link khảo sát ở `SURVEY.url` (hiện là https://finhcaas.netlify.app/).
+Mỗi bản điền `embed` (link nhúng Drive `https://drive.google.com/file/d/<id>/preview` hoặc YouTube `https://www.youtube.com/embed/…`) hoặc `src` (file mp4 trong `public/images/`, kèm `poster`). Mỗi thiết bị chỉ tải video của mình. File Drive phải chia sẻ "bất kỳ ai có đường liên kết"; khi lượt xem từ quảng cáo lớn nên chuyển sang YouTube vì Drive có thể tạm chặn phát.
 
 ## SEO: HTML dựng sẵn (prerender)
 

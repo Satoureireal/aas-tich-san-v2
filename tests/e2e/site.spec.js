@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 async function ready(page) {
   await page.goto("/");
-  await expect(page.locator("#planner .video-frame")).toBeVisible();
+  await expect(page.locator("#start-survey")).toBeVisible();
 }
 async function contact(page) {
   await page.locator("#contact-name").fill("Nguyễn Kiểm Thử");
@@ -131,22 +131,32 @@ test("Quỹ đạo, tháp, tài sản, cổ phiếu và backtest tương tác", 
   await expect(page.locator("#image-dialog")).not.toBeVisible();
 });
 
-test("Thiết kế lộ trình (v2): khung video 16:9 (Google Drive) và nút Bắt đầu khảo sát", async ({ page }) => {
+test("Thiết kế lộ trình (v2): video ngang 16:9 trên máy tính, video dọc 9:16 trên điện thoại, nút Bắt đầu khảo sát", async ({ page }) => {
+  // Không tải trình phát Drive thật trong test.
+  await page.route("https://drive.google.com/**", (route) => route.fulfill({ status: 200, contentType: "text/html", body: "<title>video</title>" }));
   await ready(page);
   await expect(page.locator("#planner .planner, #planner .pl-tabs")).toHaveCount(0);
   await expect(page.locator("#planner h2")).toHaveText("THIẾT KẾ LỘ TRÌNH ĐẦU TƯ CỦA BẠN");
   await expect(page.locator("#planner .lead")).toContainText("Tham gia khảo sát sức khỏe tài chính");
-  const frame = page.locator("#planner .video-frame");
-  await expect(frame).toBeVisible();
-  const ratio = await frame.evaluate((box) => box.clientWidth / box.clientHeight);
-  expect(ratio).toBeCloseTo(16 / 9, 1);
-  await expect(frame.locator("iframe")).toHaveAttribute("src", "https://drive.google.com/file/d/1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh/preview");
-  await expect(frame.locator(".video-wait")).toHaveCount(0);
+  const wide = page.locator("#planner .video-frame.is-wide");
+  const tall = page.locator("#planner .video-frame.is-tall");
+  await expect(wide).toBeVisible();
+  await expect(tall).toBeHidden();
+  expect(await wide.evaluate((box) => box.clientWidth / box.clientHeight)).toBeCloseTo(16 / 9, 1);
+  await expect(wide.locator("iframe")).toHaveAttribute("src", /1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh\/preview$/);
+  await expect(tall.locator("iframe")).not.toHaveAttribute("src", /./);
   const survey = page.locator("#start-survey");
   await expect(survey).toHaveText("BẮT ĐẦU KHẢO SÁT");
-  await expect(survey).toHaveAttribute("href", "https://finhcaas.netlify.app/");
+  await expect(survey).toHaveAttribute("href", "https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh");
   await expect(survey).toHaveAttribute("target", "_blank");
   await expect(page.locator("#planner .cta")).toHaveCount(1);
+  // Điện thoại: hiện khung dọc, gắn src bản dọc, bỏ src bản ngang.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(tall).toBeVisible();
+  await expect(wide).toBeHidden();
+  expect(await tall.evaluate((box) => box.clientWidth / box.clientHeight)).toBeCloseTo(9 / 16, 1);
+  await expect(tall.locator("iframe")).toHaveAttribute("src", /1oQQBmNKy7pekLu3pP63EXcQYHvmTKEDR\/preview$/);
+  await expect(wide.locator("iframe")).not.toHaveAttribute("src", /./);
 });
 
 test("Đặt lịch trực tiếp, khung giờ đúng Excel và lỗi API không báo thành công", async ({
@@ -246,7 +256,7 @@ test("Bản demo tĩnh (GitHub Pages/Vercel) gửi form mà không gọi API", a
     if (request.url().includes("/api/")) apiCalls.push(request.url());
   });
   await page.goto("/?demo=static");
-  await expect(page.locator("#planner .video-frame")).toBeVisible();
+  await expect(page.locator("#start-survey")).toBeVisible();
   await page.locator(".header-book").click();
   await contact(page);
   await expect(page.locator("#contact-title")).toHaveText("ĐĂNG KÝ THÀNH CÔNG");
@@ -262,7 +272,7 @@ test("Lưu thông tin liên hệ: lần sau mở form được điền sẵn", a
   await contact(page);
   await expect(page.locator("#contact-success")).toBeVisible();
   await page.reload();
-  await expect(page.locator("#planner .video-frame")).toBeVisible();
+  await expect(page.locator("#start-survey")).toBeVisible();
   await page.locator(".header-book").click();
   await expect(page.locator("#contact-name")).toHaveValue("Nguyễn Kiểm Thử");
   await expect(page.locator("#contact-email")).toHaveValue("test@example.com");

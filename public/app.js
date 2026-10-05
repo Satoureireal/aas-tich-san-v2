@@ -609,6 +609,31 @@ function interactions(c) {
   }, 6000);
 }
 
+// Video section lộ trình: điện thoại (≤640px) dùng bản dọc, còn lại bản ngang. Chỉ khung đang hiện có src,
+// khung bị ẩn trả src về data-src để không tải (và dừng phát) video kia.
+function initResponsiveVideo() {
+  const tall = $("#planner .video-frame.is-tall > [data-src], #planner .video-frame.is-tall > [src]");
+  const wide = $("#planner .video-frame.is-wide > iframe, #planner .video-frame.is-wide > video");
+  if (!tall || !wide) return;
+  const media = matchMedia("(max-width: 640px)");
+  const toggle = (element, on) => {
+    if (on && element.dataset.src) {
+      element.src = element.dataset.src;
+      delete element.dataset.src;
+    } else if (!on && element.getAttribute("src")) {
+      element.dataset.src = element.getAttribute("src");
+      element.removeAttribute("src");
+      if (element.tagName === "VIDEO") element.load();
+    }
+  };
+  const sync = () => {
+    toggle(tall, media.matches);
+    toggle(wide, !media.matches);
+  };
+  media.addEventListener("change", sync);
+  sync();
+}
+
 // Hoạ tiết nền parallax: trượt chậm hơn nội dung khi cuộn (chuỗi chữ "A" chậm, đồng xu nhanh hơn
 // và xoay nhẹ). Tính theo vị trí section so với giữa màn hình; tắt khi giảm chuyển động.
 function initParallax() {
@@ -652,6 +677,7 @@ try {
   interactions(copyData);
   initMotion();
   initParallax();
+  initResponsiveVideo();
   if (location.hash) {
     requestAnimationFrame(() =>
       document

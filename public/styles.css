@@ -3562,6 +3562,20 @@ dialog p {
   border: 0;
   object-fit: cover;
 }
+/* Khung dọc 9:16 cho điện thoại; khung ngang ẩn khi có bản dọc. Cao tối đa ~78% màn hình. */
+.video-frame.is-tall {
+  display: none;
+  aspect-ratio: 9 / 16;
+  width: min(100%, calc(78svh * 9 / 16));
+}
+@media (max-width: 640px) {
+  .video-frame.is-tall {
+    display: block;
+  }
+  .video-frame.has-tall {
+    display: none;
+  }
+}
 .video-wait {
   position: absolute;
   inset: 0;
