@@ -23,3 +23,7 @@ Thumbs.db
 
 # Ảnh gốc dung lượng lớn (web dùng bản tối ưu trong public/images)
 anh-goc/
+
+# Video gốc nặng (80–100MB): không đưa lên GitHub. Video trên trang nhúng từ Google Drive (xem VIDEO trong public/render.js).
+*.mp4
+*.mov
