@@ -58,12 +58,19 @@ Sửa chữ trực tiếp trong `public/content.json` (đã có nhiều chỉnh 
 
 Section gồm tiêu đề và mô tả (ô D16), khung video và nút **BẮT ĐẦU KHẢO SÁT** (mở `SURVEY.url` ở tab mới, hiện là https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh).
 
-Video ở `VIDEO` trong `public/render.js`, tự đổi theo màn hình:
+Video ở `VIDEO` trong `public/render.js`, tự host trong `public/video/` (không qua Google Drive) và tự đổi theo màn hình:
 
-- `wide`: video ngang, khung 16:9, cho máy tính / tablet (đang nhúng "2-10 Quản lý gia sản bản ngang.mp4" từ Google Drive);
-- `tall`: video dọc, khung 9:16, cho điện thoại ≤640px (đang nhúng "2-10 Quản lý gia sản bản dọc.mp4" từ Google Drive).
+- `wide`: `video/lo-trinh-ngang.mp4` (1280×720, khung 16:9) cho máy tính / tablet;
+- `tall`: `video/lo-trinh-doc.mp4` (720×1280, khung 9:16) cho điện thoại ≤640px.
 
-Mỗi bản điền `embed` (link nhúng Drive `https://drive.google.com/file/d/<id>/preview` hoặc YouTube `https://www.youtube.com/embed/…`) hoặc `src` (file mp4 trong `public/images/`, kèm `poster`). Mỗi thiết bị chỉ tải video của mình. File Drive phải chia sẻ "bất kỳ ai có đường liên kết"; khi lượt xem từ quảng cáo lớn nên chuyển sang YouTube vì Drive có thể tạm chặn phát.
+Mỗi thiết bị chỉ tải video của mình; ảnh bìa `.jpg` cùng tên. File gốc (80–100MB) để trong `anh-goc/` (không lên GitHub). Khi có video mới, chép bản gốc vào `anh-goc/` rồi nén (cần ffmpeg):
+
+```bash
+ffmpeg -y -i "anh-goc/<bản ngang>.mp4" -vf "scale=1280:720:flags=lanczos,format=yuv420p" -c:v libx264 -preset slow -crf 23 -maxrate 2200k -bufsize 4400k -profile:v high -level 4.0 -c:a aac -b:a 128k -ac 2 -movflags +faststart public/video/lo-trinh-ngang.mp4
+ffmpeg -y -i "anh-goc/<bản dọc>.mp4" -vf "scale=720:1280:flags=lanczos,format=yuv420p" -c:v libx264 -preset slow -crf 23 -maxrate 2200k -bufsize 4400k -profile:v high -level 4.0 -c:a aac -b:a 128k -ac 2 -movflags +faststart public/video/lo-trinh-doc.mp4
+ffmpeg -y -ss 1 -i public/video/lo-trinh-ngang.mp4 -frames:v 1 -q:v 4 public/video/lo-trinh-ngang.jpg
+ffmpeg -y -ss 1 -i public/video/lo-trinh-doc.mp4 -frames:v 1 -q:v 4 public/video/lo-trinh-doc.jpg
+```
 
 ## SEO: HTML dựng sẵn (prerender)
 

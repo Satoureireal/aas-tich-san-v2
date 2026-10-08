@@ -612,19 +612,26 @@ function interactions(c) {
 // Video section lộ trình: điện thoại (≤640px) dùng bản dọc, còn lại bản ngang. Chỉ khung đang hiện có src,
 // khung bị ẩn trả src về data-src để không tải (và dừng phát) video kia.
 function initResponsiveVideo() {
-  const tall = $("#planner .video-frame.is-tall > [data-src], #planner .video-frame.is-tall > [src]");
+  const tall = $("#planner .video-frame.is-tall > iframe, #planner .video-frame.is-tall > video");
   const wide = $("#planner .video-frame.is-wide > iframe, #planner .video-frame.is-wide > video");
   if (!tall || !wide) return;
   const media = matchMedia("(max-width: 640px)");
-  const toggle = (element, on) => {
-    if (on && element.dataset.src) {
-      element.src = element.dataset.src;
-      delete element.dataset.src;
-    } else if (!on && element.getAttribute("src")) {
-      element.dataset.src = element.getAttribute("src");
-      element.removeAttribute("src");
-      if (element.tagName === "VIDEO") element.load();
+  // Chuyển qua lại giữa thuộc tính thật (src, poster) và bản chờ (data-src, data-poster).
+  const swap = (element, name, on) => {
+    const key = "data-" + name;
+    if (on && element.hasAttribute(key)) {
+      element.setAttribute(name, element.getAttribute(key));
+      element.removeAttribute(key);
+    } else if (!on && element.hasAttribute(name)) {
+      element.setAttribute(key, element.getAttribute(name));
+      element.removeAttribute(name);
     }
+  };
+  const toggle = (element, on) => {
+    const had = element.hasAttribute("src");
+    swap(element, "src", on);
+    swap(element, "poster", on);
+    if (element.tagName === "VIDEO" && had && !on) element.load();
   };
   const sync = () => {
     toggle(tall, media.matches);

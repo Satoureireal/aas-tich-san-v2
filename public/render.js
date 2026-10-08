@@ -312,23 +312,23 @@ function faq(c) {
 
 // Thiết kế lộ trình đầu tư (bản v2): tiêu đề + mô tả (ô D16), khung video, nút Bắt đầu khảo sát bên dưới.
 // Video responsive: wide (ngang 16:9) cho máy tính/tablet, tall (dọc 9:16) cho điện thoại ≤640px.
-// Mỗi bản: embed (link nhúng: Google Drive https://drive.google.com/file/d/<id>/preview, YouTube https://www.youtube.com/embed/…)
-// hoặc src (file mp4 trong public/images/, kèm poster nếu có). Bỏ trống tall thì điện thoại dùng luôn bản ngang;
-// bỏ trống cả hai thì hiện khung chờ. File Drive phải chia sẻ "bất kỳ ai có đường liên kết".
+// Mỗi bản: src (file mp4 tự host trong public/video/, kèm poster là ảnh bìa) hoặc embed (link nhúng YouTube / Google Drive).
+// Bỏ trống tall thì điện thoại dùng luôn bản ngang; bỏ trống cả hai thì hiện khung chờ.
+// File gốc nằm ở anh-goc/ (không lên GitHub); nén lại bằng ffmpeg — lệnh trong README.
 export const VIDEO = {
-  wide: { embed: "https://drive.google.com/file/d/1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh/preview" }, // 2-10 Quản lý gia sản bản ngang.mp4
-  tall: { embed: "https://drive.google.com/file/d/1oQQBmNKy7pekLu3pP63EXcQYHvmTKEDR/preview" }, // 2-10 Quản lý gia sản bản dọc.mp4
+  wide: { src: "video/lo-trinh-ngang.mp4", poster: "video/lo-trinh-ngang.jpg" }, // 2-10 Quản lý gia sản bản ngang.mp4, 1280×720
+  tall: { src: "video/lo-trinh-doc.mp4", poster: "video/lo-trinh-doc.jpg" }, // 2-10 Quản lý gia sản bản dọc.mp4, 720×1280
 };
 // Trang khảo sát sức khỏe tài chính (nút "Bắt đầu khảo sát", mở tab mới).
 export const SURVEY = { url: "https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh" };
 // Bản ngang có src thật ngay trong HTML (SEO, không JS). Bản dọc chỉ có data-src; app.js gắn src khi màn hình ≤640px,
-// nên mỗi thiết bị chỉ tải video của mình (khung bị ẩn bằng CSS cũng để loading="lazy").
+// nên mỗi thiết bị chỉ tải video + ảnh bìa của mình; video chỉ tải khi bấm phát (preload="none").
 const videoPlayer = ({ embed, src, poster } = {}, lazy = false) => {
   const attr = lazy ? "data-src" : "src";
   if (embed)
     return `<iframe ${attr}="${escape(embed)}" title="Video thiết kế lộ trình đầu tư" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
   if (src)
-    return `<video ${attr}="${escape(src)}"${poster ? ` poster="${escape(poster)}"` : ""} controls preload="${lazy ? "none" : "metadata"}" playsinline></video>`;
+    return `<video ${attr}="${escape(src)}"${poster ? ` ${lazy ? "data-poster" : "poster"}="${escape(poster)}"` : ""} controls controlslist="nodownload" preload="none" playsinline></video>`;
   return `<div class="video-wait" role="img" aria-label="Video thiết kế lộ trình đầu tư (sắp cập nhật)"><span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><strong>Video thiết kế lộ trình đầu tư</strong><span>Sắp cập nhật</span></div>`;
 };
 function survey(c) {

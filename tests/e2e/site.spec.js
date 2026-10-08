@@ -131,9 +131,7 @@ test("Quỹ đạo, tháp, tài sản, cổ phiếu và backtest tương tác", 
   await expect(page.locator("#image-dialog")).not.toBeVisible();
 });
 
-test("Thiết kế lộ trình (v2): video ngang 16:9 trên máy tính, video dọc 9:16 trên điện thoại, nút Bắt đầu khảo sát", async ({ page }) => {
-  // Không tải trình phát Drive thật trong test.
-  await page.route("https://drive.google.com/**", (route) => route.fulfill({ status: 200, contentType: "text/html", body: "<title>video</title>" }));
+test("Thiết kế lộ trình (v2): video tự host ngang 16:9 trên máy tính, dọc 9:16 trên điện thoại, nút Bắt đầu khảo sát", async ({ page }) => {
   await ready(page);
   await expect(page.locator("#planner .planner, #planner .pl-tabs")).toHaveCount(0);
   await expect(page.locator("#planner h2")).toHaveText("THIẾT KẾ LỘ TRÌNH ĐẦU TƯ CỦA BẠN");
@@ -143,8 +141,10 @@ test("Thiết kế lộ trình (v2): video ngang 16:9 trên máy tính, video d�
   await expect(wide).toBeVisible();
   await expect(tall).toBeHidden();
   expect(await wide.evaluate((box) => box.clientWidth / box.clientHeight)).toBeCloseTo(16 / 9, 1);
-  await expect(wide.locator("iframe")).toHaveAttribute("src", /1RBvRLFJL7y8XuYIi2CJ9lArU4WwRU_Eh\/preview$/);
-  await expect(tall.locator("iframe")).not.toHaveAttribute("src", /./);
+  await expect(wide.locator("video")).toHaveAttribute("src", "video/lo-trinh-ngang.mp4");
+  await expect(wide.locator("video")).toHaveAttribute("poster", "video/lo-trinh-ngang.jpg");
+  await expect(page.locator("#planner iframe")).toHaveCount(0);
+  await expect(tall.locator("video")).not.toHaveAttribute("src", /./);
   const survey = page.locator("#start-survey");
   await expect(survey).toHaveText("BẮT ĐẦU KHẢO SÁT");
   await expect(survey).toHaveAttribute("href", "https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh");
@@ -155,8 +155,8 @@ test("Thiết kế lộ trình (v2): video ngang 16:9 trên máy tính, video d�
   await expect(tall).toBeVisible();
   await expect(wide).toBeHidden();
   expect(await tall.evaluate((box) => box.clientWidth / box.clientHeight)).toBeCloseTo(9 / 16, 1);
-  await expect(tall.locator("iframe")).toHaveAttribute("src", /1oQQBmNKy7pekLu3pP63EXcQYHvmTKEDR\/preview$/);
-  await expect(wide.locator("iframe")).not.toHaveAttribute("src", /./);
+  await expect(tall.locator("video")).toHaveAttribute("src", "video/lo-trinh-doc.mp4");
+  await expect(wide.locator("video")).not.toHaveAttribute("src", /./);
 });
 
 test("Đặt lịch trực tiếp, khung giờ đúng Excel và lỗi API không báo thành công", async ({

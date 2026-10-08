@@ -27,3 +27,5 @@ anh-goc/
 # Video gốc nặng (80–100MB): không đưa lên GitHub. Video trên trang nhúng từ Google Drive (xem VIDEO trong public/render.js).
 *.mp4
 *.mov
+# Ngoại lệ: video đã nén để phát trên trang.
+!public/video/*.mp4
