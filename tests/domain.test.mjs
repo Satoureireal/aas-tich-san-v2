@@ -24,7 +24,8 @@ test("Parse sheet Landing page: đủ các nhóm nội dung V2", async () => {
   assert.ok(c.survey.intro.startsWith("Tham gia khảo sát sức khỏe tài chính"));
   assert.equal(c.survey.cta, "BẮT ĐẦU KHẢO SÁT");
   assert.ok(c.compound.intro.startsWith("Danh mục được thiết kế"));
-  assert.equal(c.experts.length, 4);
+  assert.equal(c.experts.length, 6);
+  assert.ok(c.model.layers[2][1].includes("Advanced Asset Allocation (AAA)"));
   assert.equal(c.faqs.length, 19);
   assert.ok(c.faqs[1][1].includes("200 triệu đồng"));
   assert.ok(c.comparison[2].at(-1).includes("10-15"));

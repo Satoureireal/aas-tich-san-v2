@@ -12,8 +12,18 @@ const goalIcons = [
   ['<path d="M8 40h32"/><path class="fill" d="M13 40 22 22l6 9 4-5 6 14z"/><path d="M13 40 22 22l6 9 4-5 6 14"/><path d="M24 22V8"/><path class="fill" d="M24 8h11l-3 4 3 4H24z"/><path d="M24 8h11l-3 4 3 4H24"/>', "#203567"],
 ];
 const goalNames = ["Mua nhà", "Mua xe", "Khởi nghiệp", "Hưu trí", "Du học"];
-// Ảnh chuyên gia theo thứ tự trong ô D17: images/chuyen-gia-<tên>.webp (chưa có file thì hiện chữ viết tắt).
-const portraits = ["ngo-thuy-linh", "tran-minh-tuan", "vu-duy-khanh", "tran-thanh-mai"];
+// Ảnh chuyên gia theo tên trong ô D17: images/chuyen-gia-<tên-không-dấu>.webp, vd "Ông Lê Quang Chung" → chuyen-gia-le-quang-chung.webp.
+// Có ảnh mới thì chép file đúng tên vào images/ và thêm tên vào PORTRAITS; ai chưa có ảnh thì hiện chữ viết tắt.
+const PORTRAITS = new Set(["ngo-thuy-linh", "tran-minh-tuan", "vu-duy-khanh", "tran-thanh-mai"]);
+const portraitSlug = (name) =>
+  name
+    .replace(/^(Ông|Bà|TS\.|ThS\.|PGS\.)\s+/i, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/gi, "d")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-");
 const initials = (name) =>
   name
     .replace(/^(Ông|Bà|TS\.|ThS\.|PGS\.)\s+/i, "")
@@ -301,7 +311,7 @@ function steps(c) {
 }
 
 function experts(c) {
-  return `<section id="experts" class="section light-zone loop-zone"><div class="wrap"><div class="carousel-heading">${heading(c.expertsTitle, "D17", c.expertsIntro)}</div><div class="experts-track" id="experts-track" tabindex="0" aria-label="Đội ngũ chuyên gia quản lý">${c.experts.map((expert, i) => `<article class="expert-card"><div class="portrait"><span class="portrait-initials" aria-hidden="true">${escape(initials(expert[0]))}</span><img src="images/chuyen-gia-${portraits[i] ?? "chua-co"}.webp" width="480" height="480" alt="${escape(expert[0])}" loading="lazy"></div><div class="expert-copy">${copy("h3", expert[0], "D17")}${copy("p", expert[1], "D17", "expert-role")}${copy("p", expert.slice(2).join(" "), "D17")}</div></article>`).join("")}</div><div class="carousel-nav"><button class="icon-button" data-carousel="-1" aria-label="Chuyên gia trước">←</button><div class="carousel-dots" role="group" aria-label="Chọn chuyên gia">${c.experts.map((expert, i) => `<button type="button" data-expert-dot="${i}" aria-label="${escape(expert[0])}" aria-pressed="${i === 0}"><i></i></button>`).join("")}</div><button class="icon-button" data-carousel="1" aria-label="Chuyên gia tiếp theo">→</button></div></div></section>`;
+  return `<section id="experts" class="section light-zone loop-zone"><div class="wrap"><div class="carousel-heading">${heading(c.expertsTitle, "D17", c.expertsIntro)}</div><div class="experts-track" id="experts-track" tabindex="0" aria-label="Đội ngũ chuyên gia quản lý">${c.experts.map((expert, i) => `<article class="expert-card"><div class="portrait"><span class="portrait-initials" aria-hidden="true">${escape(initials(expert[0]))}</span>${PORTRAITS.has(portraitSlug(expert[0])) ? `<img src="images/chuyen-gia-${portraitSlug(expert[0])}.webp" width="480" height="480" alt="${escape(expert[0])}" loading="lazy">` : ""}</div><div class="expert-copy">${copy("h3", expert[0], "D17")}${copy("p", expert[1], "D17", "expert-role")}${copy("p", expert.slice(2).join(" "), "D17")}</div></article>`).join("")}</div><div class="carousel-nav"><button class="icon-button" data-carousel="-1" aria-label="Chuyên gia trước">←</button><div class="carousel-dots" role="group" aria-label="Chọn chuyên gia">${c.experts.map((expert, i) => `<button type="button" data-expert-dot="${i}" aria-label="${escape(expert[0])}" aria-pressed="${i === 0}"><i></i></button>`).join("")}</div><button class="icon-button" data-carousel="1" aria-label="Chuyên gia tiếp theo">→</button></div></div></section>`;
 }
 
 // FAQ: desktop là danh sách câu hỏi cuộn trong khung cố định bên trái + khung trả lời bên phải

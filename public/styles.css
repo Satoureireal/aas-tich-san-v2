@@ -4414,3 +4414,48 @@ dialog p {
     height: 250px;
   }
 }
+
+/* Footer: kênh chính thức của AAS (Fanpage, Zalo, TikTok). */
+.footer-social-title {
+  margin: 22px 0 10px;
+  color: var(--navy-dark);
+  font-size: 14px;
+  font-weight: 700;
+}
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 8px;
+  border: 1px solid #c9d6ea;
+  border-radius: 999px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+.footer-social a:hover {
+  border-color: var(--navy);
+  background: #eef3fa;
+}
+.footer-social svg {
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: 50%;
+  background: var(--navy);
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

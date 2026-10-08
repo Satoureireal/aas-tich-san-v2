@@ -19,7 +19,7 @@ for (const width of [320, 768, 1024, 1440])
     page.on("pageerror", (error) => errors.push(error.message));
     await ready(page);
     await expect(page.locator(".faq-item")).toHaveCount(19);
-    await expect(page.locator(".expert-card")).toHaveCount(4);
+    await expect(page.locator(".expert-card")).toHaveCount(6);
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth,
