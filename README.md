@@ -56,7 +56,7 @@ Sửa chữ trực tiếp trong `public/content.json` (đã có nhiều chỉnh 
 
 ## Section 16: Thiết kế lộ trình đầu tư (bản v2)
 
-Section gồm tiêu đề và mô tả (ô D16), khung video và nút **BẮT ĐẦU KHẢO SÁT** (mở `SURVEY.url` ở tab mới, hiện là https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh).
+Section gồm tiêu đề và mô tả (ô D16), khung video và nút **BẮT ĐẦU KHẢO SÁT** (mở `SURVEY.url` ở tab mới, hiện là https://phantich.aas.com.vn/tich-san/suc-khoe-tai-chinh).
 
 Video ở `VIDEO` trong `public/render.js`, tự host trong `public/video/` (không qua Google Drive) và tự đổi theo màn hình:
 

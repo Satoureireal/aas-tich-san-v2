@@ -147,7 +147,7 @@ test("Thiết kế lộ trình (v2): video tự host ngang 16:9 trên máy tính
   await expect(tall.locator("video")).not.toHaveAttribute("src", /./);
   const survey = page.locator("#start-survey");
   await expect(survey).toHaveText("BẮT ĐẦU KHẢO SÁT");
-  await expect(survey).toHaveAttribute("href", "https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh");
+  await expect(survey).toHaveAttribute("href", "https://phantich.aas.com.vn/tich-san/suc-khoe-tai-chinh");
   await expect(survey).toHaveAttribute("target", "_blank");
   await expect(page.locator("#planner .cta")).toHaveCount(1);
   // Điện thoại: hiện khung dọc, gắn src bản dọc, bỏ src bản ngang.

@@ -320,7 +320,7 @@ export const VIDEO = {
   tall: { src: "video/lo-trinh-doc.mp4", poster: "video/lo-trinh-doc.jpg" }, // 2-10 Quản lý gia sản bản dọc.mp4, 720×1280
 };
 // Trang khảo sát sức khỏe tài chính (nút "Bắt đầu khảo sát", mở tab mới).
-export const SURVEY = { url: "https://test-admin.aichatbot.website/tich-san/suc-khoe-tai-chinh" };
+export const SURVEY = { url: "https://phantich.aas.com.vn/tich-san/suc-khoe-tai-chinh" };
 // Bản ngang có src thật ngay trong HTML (SEO, không JS). Bản dọc chỉ có data-src; app.js gắn src khi màn hình ≤640px,
 // nên mỗi thiết bị chỉ tải video + ảnh bìa của mình; video chỉ tải khi bấm phát (preload="none").
 const videoPlayer = ({ embed, src, poster } = {}, lazy = false) => {
