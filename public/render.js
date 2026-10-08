@@ -14,7 +14,7 @@ const goalIcons = [
 const goalNames = ["Mua nhà", "Mua xe", "Khởi nghiệp", "Hưu trí", "Du học"];
 // Ảnh chuyên gia theo tên trong ô D17: images/chuyen-gia-<tên-không-dấu>.webp, vd "Ông Lê Quang Chung" → chuyen-gia-le-quang-chung.webp.
 // Có ảnh mới thì chép file đúng tên vào images/ và thêm tên vào PORTRAITS; ai chưa có ảnh thì hiện chữ viết tắt.
-const PORTRAITS = new Set(["ngo-thi-thuy-linh", "tran-minh-tuan", "vu-duy-khanh", "tran-thanh-mai", "hoang-anh-nhat"]);
+const PORTRAITS = new Set(["ngo-thi-thuy-linh", "tran-minh-tuan", "vu-duy-khanh", "tran-thanh-mai", "hoang-anh-nhat", "le-quang-chung"]);
 const portraitSlug = (name) =>
   name
     .replace(/^(Ông|Bà|TS\.|ThS\.|PGS\.)\s+/i, "")
