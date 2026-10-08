@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
@@ -19,6 +20,11 @@ test("Prerender SEO: HTML dựng sẵn đủ section, JSON-LD FAQ hợp lệ, ro
   const faq = ld.find((item) => item["@type"] === "FAQPage");
   assert.equal(faq.mainEntity.length, 19);
   assert.ok(faq.mainEntity.every((q) => q.name && q.acceptedAnswer.text));
+  // Mọi ảnh (img src) trong HTML dựng sẵn đều có file thật trong public/.
+  const missing = [...html.matchAll(/<img src="([^"]+)"/g)]
+    .map((m) => m[1])
+    .filter((src) => !existsSync(new URL(`../public/${src}`, import.meta.url)));
+  assert.deepEqual(missing, []);
   assert.match(await read("robots.txt"), /Sitemap: https:\/\/.+\/sitemap\.xml/);
   assert.match(await read("sitemap.xml"), /<loc>https:\/\/.+\/<\/loc>/);
 });

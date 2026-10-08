@@ -9,7 +9,7 @@ Chỉ cần ghi đè file đúng tên và đúng định dạng (PNG/JPG) dướ
 | `hero-banner-mobile.jpg` | Hero mobile (≤640px), 2 CTA đặt giữa vùng trời | 1080 × 1441 (3:4), JPG ≤ 300KB |
 | `noi-dau-01.webp` … `noi-dau-04.webp` | Ảnh người ở 4 thẻ "4 nỗi đau phổ biến" (01 → 04 theo thứ tự thẻ). Thiếu file nào thì thẻ đó hiện hình vẽ | Vuông 800 × 800, WebP nền trong suốt (≈40KB); người đặt giữa-dưới khung |
 | `logo-aas.png` | Logo header/footer | 888 × 315; bản gốc hiện tại 296 × 105 |
-| `chuyen-gia-ngo-thuy-linh.webp`, `chuyen-gia-tran-minh-tuan.webp`, `chuyen-gia-vu-duy-khanh.webp`, `chuyen-gia-tran-thanh-mai.webp` | Ảnh 4 chuyên gia (hiển thị cắt tròn). Ảnh gốc lưu ở `anh-goc/` | Vuông 480 × 480, khuôn mặt ở giữa, WebP |
+| `chuyen-gia-<tên-không-dấu>.webp` (vd `chuyen-gia-ngo-thi-thuy-linh.webp`, `chuyen-gia-hoang-anh-nhat.webp`) | Ảnh chuyên gia (cắt tròn), tên file theo tên đầy đủ trong ô D17 bỏ danh xưng (Ông/Bà/TS.). Thêm ảnh mới thì thêm tên vào `PORTRAITS` trong `render.js`; ai chưa có ảnh hiện chữ viết tắt. Ảnh gốc ở `anh-goc/` | Vuông 480 × 480, khuôn mặt ở giữa, WebP |
 
 Chân dung hiện là placeholder chữ viết tắt; thay bằng ảnh chính thức với khuôn mặt gần giữa khung. Ảnh hero có các lớp 3D nằm phía trước, nên tránh đặt chữ quan trọng ở phần dưới/phải.
 
