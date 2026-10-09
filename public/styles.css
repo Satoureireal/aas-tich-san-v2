@@ -4459,3 +4459,21 @@ dialog p {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* Icon Zalo theo logo thương hiệu Zalo: bong bóng trắng viền xanh, chữ "Zalo" xanh. */
+.footer-social .icon-zalo {
+  padding: 0;
+  background: none;
+  stroke: none;
+}
+.icon-zalo .zalo-bubble {
+  fill: #fff;
+  stroke: #0068ff;
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+}
+.icon-zalo text {
+  fill: #0068ff;
+  font: 800 14px/1 Arial, Helvetica, sans-serif;
+  letter-spacing: -0.3px;
+}
