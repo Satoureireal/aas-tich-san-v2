@@ -32,7 +32,7 @@ const jsonLd = [
     url: `${SITE_URL}/`,
     logo: `${SITE_URL}/images/logo-aas.png`,
     image: `${SITE_URL}/images/og-banner.jpg`,
-    telephone: "098 9803270",
+    telephone: "0917316891",
     sameAs: ["https://www.facebook.com/SmartInvestSecurities.chinhthuc", "https://bit.ly/AAS_ZaloOA", "https://www.tiktok.com/@smartinvestsecurities"],
     parentOrganization: { "@type": "Organization", name: "Công ty Cổ phần Chứng khoán Smart Invest (AAS)" },
     address: [
