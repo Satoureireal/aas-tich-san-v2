@@ -142,32 +142,6 @@ $$(".footer-app .qr img").forEach((img) => {
   else img.addEventListener("error", () => img.remove(), { once: true });
 });
 
-// Footer: đăng ký nhận bản tin AAS Research (bản demo không gửi đi đâu).
-$("#newsletter-form").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const input = $("#newsletter-email");
-  const status = $("#newsletter-status");
-  const button = $("button", event.currentTarget);
-  status.classList.remove("is-error");
-  if (!input.checkValidity() || !input.value.trim()) {
-    status.textContent = "Vui lòng nhập email đúng định dạng.";
-    status.classList.add("is-error");
-    input.focus();
-    return;
-  }
-  button.disabled = true;
-  try {
-    await post("/api/requests", { kind: "newsletter", email: input.value.trim() });
-    status.textContent = "Cảm ơn bạn! AAS sẽ gửi bản tin phân tích mới nhất tới email của bạn.";
-    input.value = "";
-  } catch (error) {
-    status.textContent = error.name === "TimeoutError" ? "Kết nối quá thời gian. Vui lòng thử lại." : error.message;
-    status.classList.add("is-error");
-  } finally {
-    button.disabled = false;
-  }
-});
-
 // Adds .is-revealed once the element is in view, so CSS can play its entrance sequence.
 function revealOnce(element, threshold) {
   if (!("IntersectionObserver" in window)) {

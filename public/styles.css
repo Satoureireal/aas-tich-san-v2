@@ -2559,6 +2559,11 @@ input[type="range"] {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 40px 56px;
 }
+/* Hạ tiêu đề cột Trụ sở / Quét QR cho thẳng hàng với phần chữ của logo (ảnh logo có lề trong). */
+.footer-offices,
+.footer-side {
+  padding-top: 17px;
+}
 .footer-logo img {
   width: 150px;
   height: auto;
@@ -2599,71 +2604,10 @@ input[type="range"] {
   line-height: 1.65;
   color: #d8e3ef;
 }
-.newsletter label {
-  display: block;
+.footer-apps-title {
   margin: 0 0 12px;
   font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-}
-.newsletter-field {
-  display: flex;
-  gap: 6px;
-  padding: 5px;
-  border: 1px solid #ffffff38;
-  border-radius: 12px;
-  background: #ffffff0f;
-}
-.newsletter-field #newsletter-email {
-  flex: 1;
-  min-width: 0;
-  min-height: 40px;
-  padding: 8px 10px;
-  border: 0;
-  background: none;
-  color: #fff;
-  font-size: 14px;
-}
-.newsletter-field input::placeholder {
-  color: #aebbd0;
-}
-.newsletter-field input:focus-visible {
-  outline: none;
-}
-.newsletter-field:focus-within {
-  border-color: #b6dc89;
-}
-.newsletter-field button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 16px;
-  border: 0;
-  border-radius: 9px;
-  background: var(--green);
-  color: #15284d;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.newsletter-field button svg {
-  width: 16px;
-  height: 16px;
-  stroke: currentColor;
-}
-.newsletter-status {
-  min-height: 20px;
-  margin: 8px 0 0;
-  font-size: 13px;
-  color: #b6dc89;
-}
-.newsletter-status.is-error {
-  color: #ffb4a8;
-}
-.footer-apps-title {
-  margin: 14px 0 12px;
-  font-size: 15px;
+  line-height: 1.25;
   font-weight: 700;
   color: #fff;
 }
@@ -2732,6 +2676,7 @@ input[type="range"] {
   }
   .footer-side {
     grid-column: 1 / -1;
+    padding-top: 0;
   }
 }
 @media (max-width: 640px) {
@@ -2741,6 +2686,9 @@ input[type="range"] {
   .footer-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 30px;
+  }
+  .footer-offices {
+    padding-top: 0;
   }
   .footer-bottom {
     flex-direction: column;
@@ -3855,35 +3803,11 @@ dialog p {
 }
 .footer-contact b,
 .footer-office h2,
-.newsletter label,
 .footer-apps-title {
   color: var(--navy-dark);
 }
 .footer-office p {
   color: #3d4b63;
-}
-.newsletter-field {
-  border-color: #c9d6ea;
-  background: #f3f6fb;
-}
-.newsletter-field #newsletter-email {
-  color: var(--ink);
-}
-.newsletter-field #newsletter-email::placeholder {
-  color: #7a879b;
-}
-.newsletter-field:focus-within {
-  border-color: var(--navy);
-}
-.newsletter-field button {
-  background: var(--navy);
-  color: #fff;
-}
-.newsletter-status {
-  color: #2f6e46;
-}
-.newsletter-status.is-error {
-  color: #a12f29;
 }
 .footer-app .qr {
   border-color: #b3c3de;
