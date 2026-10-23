@@ -18,6 +18,33 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+  zoom: var(--page-zoom);
+}
+/* Màn 2K/4K: cả trang thiết kế theo px với khung tối đa 1220px nên chữ và khung trông nhỏ.
+   Phóng to cả trang theo bậc (bố cục giữ nguyên như màn ~1650px). Các chiều cao theo dvh/svh
+   chia lại cho --page-zoom để không vượt màn hình. */
+:root {
+  --page-zoom: 1;
+}
+@media (min-width: 1800px) {
+  :root {
+    --page-zoom: 1.15;
+  }
+}
+@media (min-width: 2200px) {
+  :root {
+    --page-zoom: 1.35;
+  }
+}
+@media (min-width: 2800px) {
+  :root {
+    --page-zoom: 1.7;
+  }
+}
+@media (min-width: 3400px) {
+  :root {
+    --page-zoom: 2.1;
+  }
 }
 body {
   margin: 0;
@@ -2771,7 +2798,7 @@ dialog {
   border-radius: 28px;
   padding: 38px;
   width: min(540px, calc(100% - 28px));
-  max-height: 90dvh;
+  max-height: calc(90dvh / var(--page-zoom));
   overflow: auto;
   background: #f6f9f1;
   color: var(--ink);
@@ -3605,7 +3632,7 @@ dialog p {
 .video-frame.is-tall {
   display: none;
   aspect-ratio: 9 / 16;
-  width: min(100%, calc(78svh * 9 / 16));
+  width: min(100%, calc(78svh / var(--page-zoom) * 9 / 16));
 }
 @media (max-width: 640px) {
   .video-frame.is-tall {
